@@ -18,6 +18,13 @@ After this runs, the parsed data is available as req.body in your routes.
 Without express.json(), req.body would be undefined for JSON requests unless you used some other body-parsing middleware.
 */
 
+app.use((req, res, next) => { //resp time tracker
+    const start = Date.now()
+    res.on('finish', () => {
+        console.log(`${req.method} ${req.originalUrl} | Response time: ${Date.now()-start}ms`)
+    })
+    next()
+})
 
 app.use('/api/notes', notesRoutes)
 
