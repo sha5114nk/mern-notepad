@@ -9,13 +9,9 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 5001
 
-connectDB()
-
 //middleware
 app.use(express.json()) /* Tells Express: “For every incoming request, if the body is JSON (e.g. Content-Type: application/json), read it and parse it.”
-
 After this runs, the parsed data is available as req.body in your routes.
-
 Without express.json(), req.body would be undefined for JSON requests unless you used some other body-parsing middleware.
 */
 
@@ -31,6 +27,15 @@ app.use(rateLimiter)
 
 app.use('/api/notes', notesRoutes)
 
-app.listen(PORT, () => {
-    console.log('Server started on PORT:', PORT)
-})
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log("Server started on PORT:", PORT);
+    });
+  } catch (error) {
+    console.error("Failed to connect to DB:", error);
+  }
+};
+
+startServer();
