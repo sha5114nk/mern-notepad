@@ -44,4 +44,14 @@ export async function updateNote (req, res) {
         res.status(500).send('Error updating note')
     }
 }
+
+export async function deleteNote (req, res) {
+    try {
+        const deletedNote = await Note.findByIdAndDelete(req.params.id)
+        if (!deletedNote) return res.status(404).json({ message: 'Note not found' })
+        res.status(200).json(deletedNote)
+    } catch (error) {
+        console.error('deleteNote', error)
+        res.status(500).send('Error deleting note')
+    }
 }
