@@ -10,6 +10,15 @@ const PORT = process.env.PORT || 5001
 
 connectDB()
 
+//middleware
+app.use(express.json()) /* Tells Express: “For every incoming request, if the body is JSON (e.g. Content-Type: application/json), read it and parse it.”
+
+After this runs, the parsed data is available as req.body in your routes.
+
+Without express.json(), req.body would be undefined for JSON requests unless you used some other body-parsing middleware.
+*/
+
+
 app.use('/api/notes', notesRoutes)
 
 app.listen(PORT, () => {
