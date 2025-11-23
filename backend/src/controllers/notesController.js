@@ -10,12 +10,17 @@ export async function getAllNotes (_, res) { //_ -> convention to name unused ar
     }
 }
 
-export function createNote (req, res) {
-    res.status(201).json({message: 'Note created successfully'})
+export async function getNoteById (req, res) {
+    try {
+        const note = await Note.findById(req.params.id)
+        if (!note) return res.status(404).json({ message: 'Note not found' })
+        res.status(200).json(note)
+    } catch (error) {
+        console.error("getNoteById", error)
+        res.status(500).send('Internal server error')
+    }
 }
 
-export function updateNote (req, res) {
-    res.status(200).json({message: 'Note updated successfully'})
 }
 
 export function deleteNote (req, res) {
