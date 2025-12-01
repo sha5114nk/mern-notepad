@@ -1,8 +1,10 @@
 import express from 'express'
+import dotenv from 'dotenv'
+import cors from 'cors'
+
 import notesRoutes from './routes/notesRoutes.js'
 import { connectDB } from './config/db.js'
 import rateLimiter from './middleware/rateLimiter.js'
-import dotenv from 'dotenv'
 
 dotenv.config()
 
@@ -14,7 +16,6 @@ app.use(express.json()) /* Tells Express: “For every incoming request, if the 
 After this runs, the parsed data is available as req.body in your routes.
 Without express.json(), req.body would be undefined for JSON requests unless you used some other body-parsing middleware.
 */
-
 app.use((req, res, next) => { //resp time tracker
     const start = Date.now()
     res.on('finish', () => {
@@ -22,9 +23,8 @@ app.use((req, res, next) => { //resp time tracker
     })
     next()
 })
-
+app.use(cors())
 app.use(rateLimiter)
-
 app.use('/api/notes', notesRoutes)
 
 const startServer = async () => {
@@ -38,4 +38,4 @@ const startServer = async () => {
   }
 };
 
-startServer();
+startServer(); 
