@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'; 
 import toast from 'react-hot-toast'
- 
+import api from '../lib/axios.js'; 
+
 import Navbar from '../components/Navbar.jsx'
 import RateLimitedUI from '../components/RateLimitedUI.jsx';
 import NoteCard from '../components/NoteCard.jsx';
@@ -14,7 +14,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await axios.get('http://localhost:5001/api/notes');
+        const res = await api.get('/notes');
         console.log(res.data);
         setNotes(res.data);
         setIsRateLimited(false);
@@ -40,15 +40,11 @@ const HomePage = () => {
         {loading && (
           <div className="text-center text-primary py-10">Loading notes...</div>
         )}
-        {notes.length && !isRateLimited && (
+        {!!notes.length && !isRateLimited && (
           <div className="grid grid-cols -1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {notes.map((note) => (
               <NoteCard key={note._id} note={note} />
-              // <div key={note._id}>
-              //   {note.title} | {note.content}
-              // </div>
             ))}
-
           </div>
         )}
       </div>)}
