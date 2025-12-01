@@ -4,6 +4,7 @@ npm install express@4.18.2 (6:40) - Installs a specific version of Express.
 npm install nodemon -D (27:13) - Installs Nodemon as a development dependency.
 npm install mongoose@8.14.3 (59:00) - Installs a specific version of Mongoose.
 npm install dotenv@16.0.3 (59:14) - Installs a specific version of dotenv.
+npm install @upstash/rate-limit@2.0.5 @upstash/redis@1.34.9 (1:35:10) - Installs specific versions of rate-limiting and Redis packages.
 npm create vite@latest . (1:46:40) - Creates a new Vite React application.
     Select y -> React -> Javascript
 npm install (1:47:09) - Installs dependencies for the React app.
